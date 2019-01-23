@@ -1,21 +1,14 @@
-#include <algorithm>
-#include <sstream>
-#include <iostream>
-#include <vector>
-#include <string>
-
-using std::vector;
-using std::string;
+#include <bits/stdc++.h>
+using namespace std;
 
 string largest_number(vector<string> a) {
   //write your code here
-  std::stringstream ret;
-  for (size_t i = 0; i < a.size(); i++) {
-    ret << a[i];
-  }
-  string result;
-  ret >> result;
-  return result;
+    sort(a.begin(), a.end(), [] (string x, string y) {
+        return x + y > y + x;
+    });
+    string result;
+    for (string t: a) result += t;
+    return result;
 }
 
 int main() {

@@ -1,12 +1,25 @@
-#include <iostream>
-#include <vector>
-
-using std::vector;
+#include <bits/stdc++.h>
+using namespace std;
 
 vector<int> optimal_summands(int n) {
-  vector<int> summands;
-  //write your code here
-  return summands;
+    vector<int> summands;
+    int sum = 0;
+    for (int i = 1; ; ++i) {
+        if (sum + i > n) break;
+        sum += i;
+        summands.push_back(i);
+    }
+    while (true) {
+        int p = summands.empty() ? 0 : summands.back();
+        if (n - sum > p) {
+            summands.push_back(n - sum);
+            break;
+        } else {
+            sum -= p;
+            summands.pop_back();
+        }
+    }
+    return summands;
 }
 
 int main() {

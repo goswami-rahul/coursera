@@ -1,8 +1,11 @@
 #include <iostream>
 
 int get_change(int m) {
-  //write your code here
-  return m / 4;
+    if (m % 4 == 2) {
+        if (m == 2) return 2;
+        return 2 + (m - 6) / 4;
+    }
+    return m / 4 + (m % 4 > 0);
 }
 
 int main() {

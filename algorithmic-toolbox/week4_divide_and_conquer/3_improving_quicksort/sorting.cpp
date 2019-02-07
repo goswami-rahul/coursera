@@ -1,21 +1,19 @@
-#include <iostream>
-#include <vector>
-#include <cstdlib>
+#include <bits/stdc++.h>
+using namespace std;
 
-using std::vector;
-using std::swap;
-
-int partition2(vector<int> &a, int l, int r) {
-  int x = a[l];
-  int j = l;
-  for (int i = l + 1; i <= r; i++) {
-    if (a[i] <= x) {
-      j++;
-      swap(a[i], a[j]);
+pair<int,int> partition3(vector<int> &a, int l, int r) {
+    int x = a[l];
+    int m1 = l, m2 = l;
+    for (int i = l + 1; i <= r; i++) {
+        if (a[i] == x) {
+            swap(a[i], a[++m2]);
+        } else if (a[i] < x) {
+            swap(a[i], a[++m2]);
+            swap(a[m2], a[++m1]);
+        }
     }
-  }
-  swap(a[l], a[j]);
-  return j;
+    swap(a[l], a[m1]);
+    return make_pair(m1, m2);
 }
 
 void randomized_quick_sort(vector<int> &a, int l, int r) {
@@ -25,10 +23,11 @@ void randomized_quick_sort(vector<int> &a, int l, int r) {
 
   int k = l + rand() % (r - l + 1);
   swap(a[l], a[k]);
-  int m = partition2(a, l, r);
+  int m1, m2;
+  tie(m1, m2) = partition3(a, l, r);
 
-  randomized_quick_sort(a, l, m - 1);
-  randomized_quick_sort(a, m + 1, r);
+  randomized_quick_sort(a, l, m1 - 1);
+  randomized_quick_sort(a, m2 + 1, r);
 }
 
 int main() {

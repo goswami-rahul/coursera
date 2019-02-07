@@ -3,9 +3,21 @@
 
 using std::vector;
 
+int dp[101][101][101];
 int lcs3(vector<int> &a, vector<int> &b, vector<int> &c) {
-  //write your code here
-  return std::min(std::min(a.size(), b.size()), c.size());
+    int n = a.size(), m = b.size(), p = c.size();
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= m; ++j)
+            for (int k = 1; k <= p; ++k) {
+                if (a[i - 1] == b[j - 1] && b[j - 1] == c[k - 1]) {
+                    dp[i][j][k] = 1 + dp[i - 1][j - 1][k - 1];
+                } else {
+                    for (int x: {0, 1}) for (int y: {0, 1}) for (int z: {0, 1})
+                        dp[i][j][k] = std::max(dp[i][j][k],
+                        dp[i - x][j - y][k - z]);
+                }
+            }
+    return dp[n][m][p];
 }
 
 int main() {
